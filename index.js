@@ -1,11 +1,20 @@
 const express=require('express');
-const app=express()
+const app=express();
+const port=8000;
+const db=require('./config/mongoose');
+const passport=require('passport');
+const passportJWT=require('./config/passpotr-jwt-strategy');
 
-app.use('/',function(req,res){
-    return res.json({'all good':0})
-})
+const bodyParser = require('body-parser');
 
-app.listen(8000,function(err){
-    if(err){console.log(`running on port 8000`);}
-    console.log(`running on port 8000`);
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
+
+app.use('/', require('./routes'));
+
+app.listen(port,function(err){
+    if(err){console.log(`app failure due to ${err}`);}
+    console.log(`app running on port ${port}`);
 })
