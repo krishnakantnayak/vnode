@@ -9,7 +9,6 @@ const connectionParams={
 
 
 mongoose.connect(process.env.mongoDBUrl,connectionParams);
-console.log(process.env.mongoDBUrl);
 
 // mongoose.connect(process.env.MONGODB_URI);
 const db=mongoose.connection;
