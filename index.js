@@ -8,13 +8,6 @@ const passport=require('passport');
 const passportJWT=require('./config/passpotr-jwt-strategy');
 app.use(express.json());
 
-const bodyParser = require('body-parser');
-
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-app.use(bodyParser.json());
-
 app.use('/', require('./routes'));
 
 app.listen(port,function(err){

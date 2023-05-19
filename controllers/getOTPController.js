@@ -12,7 +12,7 @@ function generateOTP() {
 }
 
 exports.getotp = async function (req, res) {
-
+    console.log(req.body);
     let otp = generateOTP();
 
     let user = await User.findOne({ 'email': req.body.email })
