@@ -69,7 +69,9 @@ exports.getotp = async function (req, res) {
                 message: 'Please Check your mail for OTP and login within 5 minutes'
             });;
         });
-        return res.json(200);
+        return res.status(201).json({
+            message: 'Please Check your mail for OTP and login within 5 minutes'
+        });;
     }
 }
 
