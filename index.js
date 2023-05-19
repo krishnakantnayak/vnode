@@ -6,7 +6,7 @@ const port=process.env.PORT;
 const db=require('./config/mongoose');
 const passport=require('passport');
 const passportJWT=require('./config/passpotr-jwt-strategy');
-
+app.use(express.json());
 
 const bodyParser = require('body-parser');
 
