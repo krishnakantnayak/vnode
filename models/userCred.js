@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const userCredSchema= mongoose.Schema({
     email:{
         type:String,
+        unique: true,
         required:true
     },
     otp:{
