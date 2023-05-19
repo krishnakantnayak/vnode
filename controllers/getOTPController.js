@@ -17,10 +17,19 @@ exports.getotp = async function (req, res) {
 
     let user = await User.findOne({ 'email': req.body.email })
     if (user) {
-        //whole otp problem is alive
-        console.log(Date.now() - user.updatedAt);
-        console.log(new Date().getTime(), user.updatedAt.getTime())
-        console.log((new Date().getTime() - user.updatedAt.getTime()) / 60000)
+        
+
+        if(user.failedAttempts>=5){
+            if(user.lockedAt){
+                if(((new Date().getTime() - user.lockedAt.getTime()) / 60000) <= 60){
+                    return res.json(421,{
+                        message:`Account has been locked please wait ${60- ((new Date().getTime() - user.lockedAt.getTime()) / 60000)} mins`
+                    })
+                }
+            }            
+            
+        }
+        
         if (((new Date().getTime() - user.updatedAt.getTime()) / 60000) < 1) {
             res.json({ message: 'cant generate OTP as last OTP was genearated within 1 minutes' })
         } else {

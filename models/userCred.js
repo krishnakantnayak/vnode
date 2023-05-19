@@ -13,6 +13,9 @@ const userCredSchema= mongoose.Schema({
     failedAttempts:{
         type:Number,
         default:0
+    },
+    lockedAt:{
+        type:Date
     }
     
 },{timestamps:true});

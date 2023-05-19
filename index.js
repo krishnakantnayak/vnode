@@ -6,7 +6,12 @@ const port=process.env.PORT;
 const db=require('./config/mongoose');
 const passport=require('passport');
 const passportJWT=require('./config/passpotr-jwt-strategy');
+
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); 
+app.use(express.text());
+app.use(express.json({ type: "application/json" }));
 
 app.use('/', require('./routes'));
 

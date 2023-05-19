@@ -14,6 +14,19 @@ module.exports.createSession = async function(req, res){
             });
         }
 
+        if(user.failedAttempts>=5){
+            if(user.lockedAt){
+                if(((new Date().getTime() - user.lockedAt.getTime()) / 60000) <= 60){
+                    return res.json(421,{
+                        message:`Account has been locked please wait ${60- ((new Date().getTime() - user.lockedAt.getTime()) / 60000)} mins`
+                    })
+                }
+            }            
+            
+        }
+
+        
+
         if (((new Date().getTime() - user.updatedAt.getTime()) / 60000) >5) {
             //otp expired
             return res.json(421,{
@@ -21,11 +34,28 @@ module.exports.createSession = async function(req, res){
             })
         }
 
+        
+
         if (!user || user.otp != req.body.otp){
+            if(!user.failedAttempts){
+                user.failedAttempts=0;
+                user.save();
+            }
+            else{
+                user.failedAttempts+=1;
+                user.save();
+                if(user.failedAttempts>=5){
+                    user.lockedAt=new Date();
+                }
+            }
+            
             return res.json(422, {
                 message: "Invalid Email or OTP"
             });
         }
+
+        user.failedAttempts=0;
+        user.save();
 
         return res.json(200, {
             message: 'Sign in successful, here is your token, please keep it safe!',
