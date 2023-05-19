@@ -4,7 +4,7 @@ const router=express.Router();
 
 router.use('/api', require('./api'));
 router.get('/',(req,res)=>{
-    return res.json(2999);
+    return res.send('root');
 })
 
 module.exports=router;
